@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fixatdl xmlns="http://www.fixprotocol.org/FIXatdl-1-1/Strategy"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.fixprotocol.org/FIXatdl-1-1/Strategy fixatdl.xsd"
+version="1.1"
+strategyIdentifier="SimpleStrategy">
+
+<!-- Strategy Definition -->
+<Strategies>
+<Strategy name="SimpleAlgo" id="SimpleAlgo">
+<StrategyLayout>
+<Panel orientation="VERTICAL">
+<Label text="Simple Algorithm Parameters" />
+<DropDownList field="OrderType" label="Order Type" initValue="1">
+<EnumPair wireValue="1" enumID="Market" displayName="Market" />
+<EnumPair wireValue="2" enumID="Limit" displayName="Limit" />
+</DropDownList>
+<EditableDropDownList field="TimeInForce" label="Time In Force" initValue="0">
+<EnumPair wireValue="0" enumID="Day" displayName="Day" />
+<EnumPair wireValue="1" enumID="GTC" displayName="Good Till Canceled" />
+<EnumPair wireValue="3" enumID="IOC" displayName="Immediate Or Cancel" />
+</EditableDropDownList>
+<Spinner field="OrderQty" label="Order Quantity" minValue="1" maxValue="1000" initValue="100"/>
+<SingleSpinner field="LimitPrice" label="Limit Price" minValue="0.01" maxValue="1000.00" step="0.01" />
+<CheckBox field="IsUrgent" label="Urgent Order" initValue="false" />
+</Panel>
+</StrategyLayout>
+
+<!-- Parameters Definition -->
+<StrategyParameters>
+<Enum_t name="OrderType" fixTag="40" />
+<Enum_t name="TimeInForce" fixTag="59" />
+<Int_t name="OrderQty" fixTag="38" />
+<Float_t name="LimitPrice" fixTag="44" precision="2" />
+<Bool_t name="IsUrgent" fixTag="6001" />
+</StrategyParameters>
+
+<!-- Validation Rules -->
+<StrategyEditRules>
+<Edit field="LimitPrice" value="OrderType == '2'" errorMessage="Limit price is required for Limit orders." />
+</StrategyEditRules>
+</Strategy>
+</Strategies>
+
+</fixatdl>
